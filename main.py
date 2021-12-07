@@ -13,6 +13,7 @@ setup_init(pygame, screen)
 while running:
     # event handling, gets all event from the event queue
     for event in pygame.event.get():
+        move_player(event)
         # only do something if the event is of type QUIT
         if event.type == pygame.QUIT:
             # change the value to False, to exit the main loop

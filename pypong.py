@@ -16,8 +16,10 @@ score_machine = 0
 
 ball = []
 
+dy_player = 0
+
 def setup_init(pyg, scr):
-    global rect_machine, rect_player, score_machine, score_player, ball
+    global rect_machine, rect_player, score_machine, score_player, ball, dy_player
 
     #Mittellinie#
     scr.fill(COLOR_BLACK)
@@ -54,8 +56,11 @@ def update_game(pyg, scr):
     pyg.draw.rect(scr, COLOR_GRAY, (x / 2 - 5, 0, 10, y))
 
     # Spieler Zeichnen
-    rect_player = pygame.Rect(X_PLAYER, y / 2 - 35, 10, 70)
-    rect_machine = pygame.Rect(X_MACHINE, y / 2 - 35, 10, 70)
+    #rect_player = pygame.Rect(X_PLAYER, y / 2 - 35, 10, 70)
+    #rect_machine = pygame.Rect(X_MACHINE, y / 2 - 35, 10, 70)
+
+    #Spieler bewegen
+    rect_player.move_ip(0, dy_player)
 
     pyg.draw.rect(scr, COLOR_WHITE, rect_player)
     pyg.draw.rect(scr, COLOR_WHITE, rect_machine)
@@ -63,6 +68,11 @@ def update_game(pyg, scr):
     #Ball bewegen
     ball[2] = ball[2] + ball[0]
     ball[3] = ball[3] + ball[1]
+
+    if ball[3] > y - 14 or ball[3] - 14 < 0:
+        ball[1] = ball[1] * - 1
+    if ball[2] > x - 14 or ball[2] - 14 < 0:
+        ball[0] = ball[0] * - 1
 
     # Ball, Bildmitte, Radius = 7
     pyg.draw.circle(scr, COLOR_GREEN, (ball[2], ball[3]), 7)
@@ -75,3 +85,15 @@ def update_game(pyg, scr):
 
     scr.blit(text_score1, (120, 50))
     scr.blit(text_score2, (440, 50))
+
+def move_player(ev):
+    global dy_player
+
+    if ev.type == pygame.KEYDOWN:
+        if pygame.key.name(ev.key) == "down":
+            dy_player = 4
+        elif pygame.key.name(ev.key) == "up":
+            dy_player = -4
+    elif ev.type == pygame.KEYUP:
+        if pygame.key.name(ev.key) == "down" or pygame.key.name(ev.key) == "up":
+            dy_player = 0
