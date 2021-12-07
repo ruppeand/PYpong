@@ -1,14 +1,13 @@
-# import the pygame module, so you can use it
 from pypong import *
-import pygame
-# initialize the pygame module
 pygame.init()
 
 screen =pygame.display.set_mode((640, 480))
-setup_init(pygame, screen)
 
 # define a variable to control the main loop
 running = True
+started = False
+
+setup_init(pygame, screen)
 
 # main loop
 while running:
@@ -18,5 +17,9 @@ while running:
         if event.type == pygame.QUIT:
             # change the value to False, to exit the main loop
             running = False
-
+        if event.type == pygame.KEYDOWN:
+            if pygame.key.name(event.key) == "s":
+                started = True
+    if started:
+        update_game(pygame, screen)
     pygame.display.update()
