@@ -36,8 +36,3 @@ def setup_init(pyg, scr):
 
     scr.blit(text_score1, (120, 50))
     scr.blit(text_score2, (440, 50))
-
-
-
-
-
